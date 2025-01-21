@@ -1,0 +1,11 @@
+,CourseID,ModuleName,ModuleDescription,Date,ModuleDuration
+0,50,Analiza Matematyczna,"Zaawansowane zagadnienia analizy matematycznej, w tym granice, pochodne i całki.",2025-01-17,31
+1,11,Algebra Liniowa,"Podstawy algebry liniowej, w tym macierze, wektory i przestrzenie wektorowe.",2025-01-05,14
+2,45,Fizyka,"Podstawowe zasady fizyki, w tym mechanika, termodynamika i elektromagnetyzm.",2025-01-12,26
+3,16,Chemia,"Podstawy chemii, w tym struktura atomowa, reakcje chemiczne i równania chemiczne.",2025-01-20,42
+4,5,Biologia,"Podstawy biologii, w tym biologia komórkowa, genetyka i ekologia.",2025-01-13,8
+5,51,Informatyka,"Podstawy informatyki, obejmujące algorytmy, struktury danych i systemy operacyjne.",2025-01-09,5
+6,96,Statystyka,"Podstawy statystyki, w tym analiza danych, testowanie hipotez i regresja.",2025-01-01,20
+7,87,Ekonomia,"Podstawy ekonomii, w tym mikroekonomia, makroekonomia i teoria gier.",2025-01-14,22
+8,31,Zarządzanie,"Podstawy zarządzania, w tym planowanie, organizowanie i kontrola.",2025-01-17,12
+9,25,Prawo,"Podstawy prawa, w tym prawo cywilne, karne i administracyjne.",2025-01-16,38
