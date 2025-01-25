@@ -43,7 +43,7 @@ Zawiera informacje o webinarach:
 - **TeacherID** int – identyfikator nauczyciela
 - **WebinarName** nvarchar(64) – nazwa webinaru
 - **WebinarDescription** nvarchar(128) – opis webinaru
-- **WebinarPrice** money – cena webinaru
+- **WebinarPrice** decimal(10, 2) – cena webinaru
 - **WebinarStartDate** datetime – data rozpoczęcia webinaru
 - **IsFree** bit – informacja, czy webinar jest darmowy
 
@@ -55,7 +55,7 @@ CREATE TABLE Webinars (
     TeacherID int NOT NULL,
     WebinarName nvarchar(64) NOT NULL,
     WebinarDescription nvarchar(128) NULL,
-    WebinarPrice money NULL,
+    WebinarPrice decimal(10, 2) NOT NULL,
     WebinarStartDate datetime NOT NULL,
     IsFree bit NOT NULL,
     CONSTRAINT Webinars_pk PRIMARY KEY (WebinarID)
