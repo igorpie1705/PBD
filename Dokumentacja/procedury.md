@@ -598,3 +598,111 @@ BEGIN
 END;
 GO
 ```
+
+## Dodanie studenta
+
+```sql
+CREATE PROCEDURE AddStudent
+@Email nvarchar(64), @Password nvarchar(64), @FirstName nvarchar(64), @LastName nvarchar(64), @Address nvarchar(64), @City nvarchar(64), @Country nvarchar(64)
+AS
+BEGIN
+    DECLARE @HashedPassword VARBINARY(64);
+    SET @HashedPassword = HASHBYTES('SHA2_256', @Password);
+
+    INSERT INTO Students (Email, Password, FirstName, LastName, Address, City, Country)
+    VALUES (@Email, @HashedPassword, @FirstName, @LastName, @Address, @City, @Country)
+END;
+```
+
+## Usuwanie studenta
+
+```sql
+CREATE PROCEDURE RemoveStudent
+    @StudentID INT
+AS
+BEGIN
+    DELETE FROM Students
+    WHERE StudentID = @StudentID;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie znaleziono studenta o podanym ID.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Student został usunięty.';
+    END
+END;
+```
+
+## Dodanie pracownika
+
+```sql
+CREATE PROCEDURE AddEmployee
+@EmployeeID int, @Email nvarchar(64), @Password nvarchar(64), @FirstName nvarchar(64), @LastName nvarchar(64), @Phone nvarchar(64), @HireDate date, @EmployeeType int
+AS
+BEGIN
+    DECLARE @HashedPassword VARBINARY(64);
+    SET @HashedPassword = HASHBYTES('SHA2_256', @Password);
+
+    INSERT INTO Employees (EmployeeID, Email, Password, FirstName, LastName, Phone, HireDate, EmployeeType)
+    VALUES (@EmployeeID, @Email, @HashedPassword, @FirstName, @LastName, @Phone, @HireDate, @EmployeeType)
+END;
+```
+
+## Usuwanie pracownika
+
+```sql
+CREATE PROCEDURE RemoveEmployee
+    @EmployeeID INT
+AS
+BEGIN
+    DELETE FROM Employees
+    WHERE EmployeeID = @EmployeeID;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie znaleziono pracownika o podanym ID.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Pracownik został pomyślnie usunięty.';
+    END
+END;
+```
+
+## Dodanie tłumacza
+
+```sql
+CREATE PROCEDURE AddTranslator
+@TranslatorID int, @Email nvarchar(64), @Password nvarchar(64), @FirstName nvarchar(64), @LastName nvarchar(64), @Address nvarchar(64), @Phone nvarchar(64), @HireDate date
+AS
+BEGIN
+    DECLARE @HashedPassword VARBINARY(64);
+    SET @HashedPassword = HASHBYTES('SHA2_256', @Password);
+
+    INSERT INTO Employees (TranslatorID, Email, Password, FirstName, LastName, Address, Phone, HireDate)
+    VALUES (@TranslatorID, @Email, @HashedPassword, @FirstName, @LastName, @Address, @Phone, @HireDate)
+END;
+```
+
+## Usuwanie tłumacza
+
+```sql
+CREATE PROCEDURE RemoveTranslator
+    @TranslatorID INT
+AS
+BEGIN
+    DELETE FROM Employees
+    WHERE TranslatorID = @TranslatorID;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie znaleziono tłumacza o podanym ID.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Tłumacz został pomyślnie usunięty.';
+    END
+END;
+```
