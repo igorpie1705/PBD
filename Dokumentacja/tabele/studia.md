@@ -78,7 +78,7 @@ Zawiera informacje o spotkaniach w ramach studiów:
 - **MeetingName** nvarchar(64) – nazwa spotkania.
 - **MeetingPrice** money – cena za uczestnictwo.
 - **MeetingDate** datetime – data spotkania.
-- **MeetingDuration** time(0) – czas trwania spotkania.
+- **MeetingDuration** nvarchar(32) – czas trwania spotkania.
 - **TranslatorID** int (nullable) – identyfikator tłumacza.
 - **LanguageID** int (nullable) – identyfikator języka.
 
@@ -91,7 +91,7 @@ CREATE TABLE StudiesMeeting (
     MeetingName nvarchar(64) NOT NULL,
     MeetingPrice money NOT NULL,
     MeetingDate datetime NOT NULL,
-    MeetingDuration time(0) NOT NULL,
+    MeetingDuration nvarchar(32) NOT NULL,
     TranslatorID int NULL,
     LanguageID int NULL,
     CONSTRAINT StudiesMeeting_pk PRIMARY KEY (MeetingID)
