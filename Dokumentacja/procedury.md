@@ -614,6 +614,43 @@ BEGIN
 END;
 ```
 
+## Edytowanie studenta
+
+```sql
+CREATE PROCEDURE EditStudent
+    @StudentId INT,
+    @Email NVARCHAR(64) = NULL, 
+    @Password NVARCHAR(64) = NULL, 
+    @FirstName NVARCHAR(64) = NULL, 
+    @LastName NVARCHAR(64) = NULL, 
+    @Address NVARCHAR(64) = NULL, 
+    @City NVARCHAR(64) = NULL, 
+    @Country NVARCHAR(64) = NULL
+AS
+BEGIN
+    DECLARE @HashedPassword VARBINARY(64);
+
+    IF @Password IS NOT NULL
+    BEGIN
+        SET @HashedPassword = HASHBYTES('SHA2_256', CONVERT(NVARCHAR(MAX), @Password));
+    END
+
+    UPDATE Students
+    SET 
+        Email = ISNULL(@Email, Email), 
+        Password = CASE 
+                      WHEN @Password IS NOT NULL THEN @HashedPassword
+                      ELSE Password
+                   END,
+        FirstName = ISNULL(@FirstName, FirstName), 
+        LastName = ISNULL(@LastName, LastName),
+        Address = ISNULL(@Address, Address),
+        City = ISNULL(@City, City),
+        Country = ISNULL(@Country, Country)
+    WHERE StudentId = @StudentId;
+END;
+```
+
 ## Usuwanie studenta
 
 ```sql
@@ -650,6 +687,43 @@ BEGIN
 END;
 ```
 
+## Edytowanie pracownika
+
+```sql
+CREATE PROCEDURE EditEmployee
+    @EmployeeID INT,
+    @Email NVARCHAR(64) = NULL, 
+    @Password NVARCHAR(64) = NULL, 
+    @FirstName NVARCHAR(64) = NULL, 
+    @LastName NVARCHAR(64) = NULL, 
+    @Phone NVARCHAR(64) = NULL, 
+    @HireDate DATE = NULL, 
+    @EmployeeType INT = NULL
+AS
+BEGIN
+    DECLARE @HashedPassword VARBINARY(64);
+
+    IF @Password IS NOT NULL
+    BEGIN
+        SET @HashedPassword = HASHBYTES('SHA2_256', CONVERT(NVARCHAR(MAX), @Password));
+    END
+
+    UPDATE Employees
+    SET 
+        Email = ISNULL(@Email, Email), 
+        Password = CASE 
+                      WHEN @Password IS NOT NULL THEN @HashedPassword
+                      ELSE Password
+                   END,
+        FirstName = ISNULL(@FirstName, FirstName), 
+        LastName = ISNULL(@LastName, LastName),
+        Phone = ISNULL(@Phone, Phone),
+        HireDate = ISNULL(@HireDate, HireDate),
+        EmployeeType = ISNULL(@EmployeeType, EmployeeType)
+    WHERE EmployeeID = @EmployeeID;
+END;
+```
+
 ## Usuwanie pracownika
 
 ```sql
@@ -683,6 +757,41 @@ BEGIN
 
     INSERT INTO Employees (TranslatorID, Email, Password, FirstName, LastName, Address, Phone, HireDate)
     VALUES (@TranslatorID, @Email, @HashedPassword, @FirstName, @LastName, @Address, @Phone, @HireDate)
+END;
+```
+
+## Edytowanie tłumacza
+
+```sql
+CREATE PROCEDURE EditTranslator
+    @TranslatorID INT,
+    @Email NVARCHAR(64) = NULL, 
+    @Password NVARCHAR(64) = NULL, 
+    @FirstName NVARCHAR(64) = NULL, 
+    @LastName NVARCHAR(64) = NULL,  
+    @Phone NVARCHAR(64) = NULL, 
+    @HireDate DATE = NULL
+AS
+BEGIN
+    DECLARE @HashedPassword VARBINARY(64);
+
+    IF @Password IS NOT NULL
+    BEGIN
+        SET @HashedPassword = HASHBYTES('SHA2_256', CONVERT(NVARCHAR(MAX), @Password));
+    END
+
+    UPDATE Translators
+    SET 
+        Email = ISNULL(@Email, Email), 
+        Password = CASE 
+                      WHEN @Password IS NOT NULL THEN @HashedPassword
+                      ELSE Password
+                   END,
+        FirstName = ISNULL(@FirstName, FirstName), 
+        LastName = ISNULL(@LastName, LastName),
+        Phone = ISNULL(@Phone, Phone),
+        HireDate = ISNULL(@HireDate, HireDate)
+    WHERE TranslatorID = @TranslatorID;
 END;
 ```
 
