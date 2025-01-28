@@ -448,3 +448,74 @@ BEGIN
     RETURN @Result
 END;
 ```
+## Pobieranie linku do płatności
+
+```sql
+CREATE FUNCTION dbo.GetPaymentLink (@OrderID INT)
+RETURNS NVARCHAR(128)
+AS
+BEGIN
+    DECLARE @PaymentLink NVARCHAR(128);
+
+    SELECT @PaymentLink = PaymentLink
+    FROM Orders
+    WHERE OrderID = @OrderID;
+
+    RETURN @PaymentLink;
+END;
+```
+
+## Wyświetlanie produktów w koszyku
+
+```sql
+CREATE FUNCTION dbo.GetCartDetails (@OrderID INT)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        OD.ProductID,
+        OD.Price
+    FROM 
+        OrderDetails OD
+    INNER JOIN 
+        Orders O ON OD.OrderID = O.OrderID
+    WHERE 
+        OD.OrderID = @OrderID
+);
+```
+## Wyświetlanie wartości zamówienia w koszyku
+
+```sql
+CREATE FUNCTION dbo.GetCartSummary (@OrderID INT)
+RETURNS MONEY
+AS
+BEGIN
+    DECLARE @TotalPrice MONEY;
+    SELECT @TotalPrice = SUM(Price)
+    FROM dbo.GetCartDetails(@OrderID);
+    RETURN @TotalPrice;
+END;
+```
+
+## Sprawdzanie statusu zamówionych produktów
+
+```sql
+CREATE FUNCTION dbo.GetProductsWithStatus (@OrderID INT)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        OD.ProductID,
+        S.Description AS StatusDescription
+    FROM
+        OrderDetails OD
+    INNER JOIN
+        Orders O ON OD.OrderID = O.OrderID
+    INNER JOIN
+        Statuses S ON OD.StatusID = S.StatusID
+    WHERE
+        OD.OrderID = @OrderID
+);
+```
