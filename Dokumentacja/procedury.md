@@ -815,3 +815,144 @@ BEGIN
     END
 END;
 ```
+
+## Dodawanie produktu do koszyka
+
+```sql
+CREATE PROCEDURE dbo.AddProductToCart
+    @OrderID INT,
+    @ProductID INT,
+    @ProductType INT,
+    @Price MONEY
+AS
+BEGIN
+    INSERT INTO OrderDetails (OrderID, ProductID, ProductType, Price, StatusID)
+    VALUES (@OrderID, @ProductID, @ProductType, @Price, 0); -- 0 oznacza produkt w koszyku
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie udało się dodać produktu do koszyka.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Produkt został pomyślnie dodany do koszyka.';
+    END
+END;
+```
+
+## Usuwanie produktu z koszyka
+
+```sql
+CREATE PROCEDURE dbo.RemoveProductFromCart
+    @OrderID INT,
+    @ProductID INT,
+    @ProductType INT
+AS
+BEGIN
+    DELETE FROM OrderDetails
+    WHERE OrderID = @OrderID AND ProductID = @ProductID AND ProductType = @ProductType;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie znaleziono produktu do usunięcia z koszyka.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Produkt został pomyślnie usunięty z koszyka.';
+    END
+END;
+```
+
+## Składanie zamówienia
+
+```sql
+CREATE PROCEDURE dbo.MakeOrder
+    @OrderID INT
+AS
+BEGIN
+    UPDATE OrderDetails
+    SET StatusID = 5
+    WHERE OrderID = @OrderID;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie znaleziono zamówienia o podanym ID w szczegółach zamówienia.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Zamówienie zostało pomyślnie złożone.';
+    END
+END;
+```
+
+## Manualne dodawanie zamówienia
+
+```sql
+CREATE PROCEDURE dbo.ManuallyAddOrder
+    @OrderID INT,
+    @OrderDate DATETIME,
+    @PaymentLink NVARCHAR(MAX)
+AS
+BEGIN
+    INSERT INTO Orders (OrderID, OrderDate, PaymentLink)
+    VALUES (@OrderID, @OrderDate, @PaymentLink);
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie udało się dodać nowego zamówienia.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Nowe zamówienie zostało pomyślnie dodane.';
+    END
+END;
+```
+
+## Manualne dodawanie szczegółów zamówienia
+
+```sql
+CREATE PROCEDURE dbo.ManuallyAddOrderDetails
+    @OrderID INT,
+    @StatusID INT,
+    @StudentID INT,
+    @ProductType INT,
+    @ProductID INT,
+    @Price MONEY
+AS
+BEGIN
+    INSERT INTO OrderDetails (OrderID, StatusID, StudentID, ProductType, ProductID, Price)
+    VALUES (@OrderID, @StatusID, @StudentID, @ProductType, @ProductID, @Price);
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie udało się dodać szczegółów zamówienia.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Szczegóły zamówienia zostały pomyślnie dodane.';
+    END
+END;
+```
+
+## Manualna zamiana statusu zamówienia
+
+```sql
+CREATE PROCEDURE dbo.ManuallyUpdateOrderStatus
+    @OrderID INT,
+    @StatusID INT
+AS
+BEGIN
+    UPDATE OrdersDetails
+    SET StatusID = @StatusID
+    WHERE OrderID = @OrderID;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Nie znaleziono zamówienia o podanym ID.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'Status zamówienia został pomyślnie zaktualizowany.';
+    END
+END;
+```
