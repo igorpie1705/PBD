@@ -1,2 +1,3 @@
-# Podstawy Baz Danych
-Dokumentacja bazy danych, oraz implementacja generatora przykładowych danych w Jupyter Notebook
+# Database Fundamentals
+
+Database documentation and implementation of a sample data generator in Jupyter Notebook.
